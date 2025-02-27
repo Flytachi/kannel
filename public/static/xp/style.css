@@ -369,3 +369,73 @@ body {
     border: 2px solid #000080;
     background: #f8f8f8;
 }
+
+.error-window {
+    width: 350px;
+    background: #d4d0c8;
+    border: 2px solid #808080;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.error-header {
+    background: navy;
+    color: white;
+    padding: 6px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.error-header .title {
+    flex-grow: 1;
+}
+
+.error-header .close-btn {
+    background: #c0c0c0;
+    border: 1px solid #808080;
+    padding: 2px 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.error-header .close-btn:hover {
+    background: red;
+    color: white;
+}
+
+.error-body {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.error-icon {
+    font-size: 25px;
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
+
+.error-text {
+    font-size: 14px;
+    color: black;
+}
+
+.error-footer {
+    background: #c0c0c0;
+    padding: 8px;
+    text-align: right;
+}
+
+.error-footer button {
+    background: #d4d0c8;
+    border: 2px solid #808080;
+    padding: 3px 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.error-footer button:active {
+    border: 2px inset #808080;
+}
