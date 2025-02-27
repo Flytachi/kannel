@@ -62,11 +62,14 @@ function showNotification(title, message, iconType = 'info') {
     }, 5000);
 }
 
+let closeAction = () => {}
+
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.sidebar-menu li').forEach(item => {
         item.addEventListener('click', function() {
             document.querySelectorAll('.sidebar-menu li').forEach(el => el.classList.remove('selected'));
             this.classList.add('selected');
+            closeAction();
         });
     });
 });

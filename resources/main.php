@@ -5,7 +5,7 @@
     </div>
 </div>
 
-<div class="content" id="content">
+<div class="content" id="content" style="display: none">
 
     <div class="content-sidebar" id="sidebar">
 
@@ -51,7 +51,6 @@
 
     function selectService(elem = null) {
         if (elem == null || !elem.classList.contains("selected")) {
-            unsetTimer();
             display.innerHTML = '';
 
             Service.serviceStatus(true, (response) => {
@@ -79,13 +78,13 @@
                 result += '<button class="card-button" onclick="selectService()">Reload</button>';
                 result += '</div></div>';
                 display.innerHTML = result;
+                closeAction = function () {}
             });
         }
     }
 
     function selectConfig(elem = null) {
         if (elem == null || !elem.classList.contains("selected")) {
-            unsetTimer();
             display.innerHTML = '';
 
             Service.environmentList(true, (response) => {
@@ -107,6 +106,7 @@
                 // result += '<button class="card-button" onclick="">Save</button>';
                 result += '</div></div>';
                 display.innerHTML = result;
+                closeAction = function () {}
             });
         }
     }
@@ -149,11 +149,15 @@
                 result += '<button class="card-button" id="logTimeoutBtn" onclick=""></button>';
                 result += '</div></div>';
                 display.innerHTML = result;
+                closeAction = function () {
+                    unsetTimer();
+                }
                 setTimer();
                 showLogs();
             });
         }
     }
+
 
     function setTimer() {
         let limit = Number.parseInt(document.querySelector("#logParamTimeout").value) * 1000;
