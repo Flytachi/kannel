@@ -88,12 +88,12 @@ SMPP_PASS=<your_smpp_password>
 SMPP_PARAMS_LISTENER_RPS=100                            # read qty per/seccond for listener
 SMPP_PARAMS_SENDER_RPS=100                              # read qty per/seccond for sender
 SMPP_PARAMS_SENDER_QLN=<your_redis_listname>            # set '' default value -> 'smpp-kannel'
-SMPP_PARAMS_SENDER_FROM="<your_smpp_from_address>"      # example '*100#'
+SMPP_PARAMS_SENDER_FROM=<your_smpp_from_address>        # example '*100#'
 
 SMPP_PARAMS_DLR_ON=<true/false>                         # params switch -> receive request on url
 SMPP_PARAMS_DLR_URL=<your_receive_url>                  # receive url
 SMPP_PARAMS_DLR_METHOD=<your_receive_method>            # receive method (GET, POST)
-SMPP_PARAMS_DLR_META=""                                 # receive set static custom metta-data
+SMPP_PARAMS_DLR_META=                                   # receive set static custom metta-data
 SMPP_PARAMS_DLR_RESPONSIVE=<true/false>                 # receive wait for a response(json) and forward the response
 
 WEB_ADMIN_USER=<admin_user>                             # Web interface (username)
@@ -103,7 +103,7 @@ WEB_ADMIN_PASS=<admin_pass>                             # Web interface (passwor
 <hr>
 
 ## Service command
-Commands for service management! The shell must be responsive (php >= 8.3), 
+Commands for service management! The shell must be responsive (php >= 8.3),<br>
 otherwise the commands will not work
 ### Start service:
 ```sh
