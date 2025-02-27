@@ -1,6 +1,6 @@
 # Kannel (Smpp protocol)
 
-![Icon](https://raw.githubusercontent.com/Flytachi/kannel/public/favicon.svg)
+![Icon](https://raw.githubusercontent.com/Flytachi/kannel/mster/public/favicon.svg)
 
 ### 📌 Description
 
