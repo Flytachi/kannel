@@ -1,0 +1,31 @@
+{
+    "name": "flytachi/kannel",
+    "description": "Extra Framework Kannel(Smpp protocol)",
+    "type": "project",
+    "license": "MIT",
+    "version": "1.0.0",
+    "keywords": ["Extra","extra","kannel","smpp"],
+    "scripts": {
+        "post-create-project-cmd": [
+            "chmod -R 777 storage",
+            "@php extra cfg env -i"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Flytachi",
+            "email": "jasur.rakhmatov03@gmail.com"
+        }
+    ],
+    "require": {
+        "flytachi/kernel": "5.2.0",
+        "glushkovds/php-smpp": "0.7.0",
+        "ext-posix": "*",
+        "ext-redis": "*"
+    }
+}
