@@ -1,4 +1,7 @@
 # Kannel (Smpp protocol)
+
+![Icon](https://raw.githubusercontent.com/Flytachi/kannel/public/favicon.svg)
+
 ### 📌 Description
 
 This project is designed to work with the SMPP protocol and serves as a bridge for integrating USSD responses. It processes incoming and outgoing messages, enabling seamless interaction with mobile operators and other SMPP services.
