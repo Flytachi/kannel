@@ -1,8 +1,8 @@
 # Kannel (Smpp protocol)
 
-<center>
+<p align="center">
       <img src="https://raw.githubusercontent.com/Flytachi/kannel/master/public/favicon.svg" width="100">
-</center>
+</p>
 
 ### 📌 Description
 
