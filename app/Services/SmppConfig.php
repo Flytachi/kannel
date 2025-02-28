@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use Flytachi\Kernel\Src\Http\Error;
+use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Http\HttpCode;
-use Flytachi\Kernel\Src\Stereotype\Service;
 
 final class SmppConfig
 {
@@ -26,20 +25,28 @@ final class SmppConfig
     final public static function init(): void
     {
         self::$host = (string) env('SMPP_HOST');
-        if (!self::$host) Error::throw(HttpCode::FAILED_DEPENDENCY,
-            "env param 'host' not found (SMPP_HOST)");
+        if (!self::$host) ClientError::throw(
+            "env param 'host' not found (SMPP_HOST)",
+            HttpCode::FAILED_DEPENDENCY,
+        );
 
         self::$port = (int) env('SMPP_PORT');
-        if (!self::$port) Error::throw(HttpCode::FAILED_DEPENDENCY,
-            "env param 'port' not found (SMPP_PORT)");
+        if (!self::$port) ClientError::throw(
+            "env param 'port' not found (SMPP_PORT)",
+            HttpCode::FAILED_DEPENDENCY
+        );
 
         self::$username = (string) env('SMPP_LOGIN');
-        if (!self::$username) Error::throw(HttpCode::FAILED_DEPENDENCY,
-            "env param 'login' not found (SMPP_LOGIN)");
+        if (!self::$username) ClientError::throw(
+            "env param 'login' not found (SMPP_LOGIN)",
+            HttpCode::FAILED_DEPENDENCY
+        );
 
         self::$password = (string) env('SMPP_PASS', '');
-        if (!self::$username) Error::throw(HttpCode::FAILED_DEPENDENCY,
-            "env param 'password' not found (SMPP_PASS)");
+        if (!self::$username) ClientError::throw(
+            "env param 'password' not found (SMPP_PASS)",
+            HttpCode::FAILED_DEPENDENCY
+        );
 
         // -----
         self::$prmListenerBalancer = (int) env('SMPP_PARAMS_LISTENER_RPS', 10);

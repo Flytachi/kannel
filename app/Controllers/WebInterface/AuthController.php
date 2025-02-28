@@ -2,12 +2,12 @@
 
 namespace App\Controllers\WebInterface;
 
+use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Factory\Entity\RequestDefault;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\DeleteMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PostMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
-use Flytachi\Kernel\Src\Http\Error;
 use Flytachi\Kernel\Src\Http\HttpCode;
 use Flytachi\Kernel\Src\Stereotype\Response;
 use Flytachi\Kernel\Src\Stereotype\RestController;
@@ -40,7 +40,7 @@ class AuthController extends RestController
             $haveUser == '' || $havePass == ''
             || !($request->username == $haveUser && $request->password == $havePass)
         ) {
-            Error::throw(HttpCode::BAD_REQUEST, 'Uncorrected user or password.');
+            ClientError::throw('Uncorrected user or password.', HttpCode::BAD_REQUEST);
         }
 
         $_SESSION['ACCESS'] = true;

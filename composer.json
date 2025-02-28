@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "flytachi/kernel": "5.2.0",
+        "flytachi/kernel": "5.2.5",
         "glushkovds/php-smpp": "0.7.0",
         "ext-posix": "*",
         "ext-redis": "*"

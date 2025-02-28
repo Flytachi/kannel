@@ -2,14 +2,11 @@
 
 namespace App\Controllers\WebInterface;
 
-use App\Threads\ProcessorCluster;
 use Flytachi\Kernel\Extra;
+use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Factory\Entity\RequestDefault;
-use Flytachi\Kernel\Src\Factory\Mapping\Annotation\DeleteMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
-use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PutMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
-use Flytachi\Kernel\Src\Http\Error;
 use Flytachi\Kernel\Src\Http\HttpCode;
 use Flytachi\Kernel\Src\Stereotype\Response;
 use Flytachi\Kernel\Src\Stereotype\RestController;
@@ -18,7 +15,6 @@ use Flytachi\Kernel\Src\Stereotype\RestController;
 #[SessionMiddleware]
 class LogController extends RestController
 {
-
     #[GetMapping('files')]
     public function files(): Response
     {
@@ -36,7 +32,7 @@ class LogController extends RestController
         $request = RequestDefault::params(false);
         $limit = $request->limit ?? 1000;
         if (!is_numeric($limit)) {
-            Error::throw(HttpCode::BAD_REQUEST, "limit must be numeric");
+            ClientError::throw('limit must be numeric', HttpCode::BAD_REQUEST);
         }
         $limit = (int) $limit;
         $logFile = Extra::$pathStorageLog . '/' . ($request->filename ?? '') . '.log';

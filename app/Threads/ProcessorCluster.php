@@ -5,8 +5,6 @@ namespace App\Threads;
 use App\Services\SmppConfig;
 use Flytachi\Kernel\Src\Stereotype\Cluster;
 use Flytachi\Kernel\Src\Thread\Signal;
-use PhpSmpp\Client;
-use PhpSmpp\Service\Listener;
 
 class ProcessorCluster extends Cluster
 {

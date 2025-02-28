@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Entity\Dto\MsgDto;
 use App\Entity\Dto\ResponseDto;
-use Flytachi\Kernel\Src\Http\Error;
+use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Http\HttpCode;
 use Flytachi\Kernel\Src\Stereotype\Service;
 use Flytachi\Kernel\Src\Unit\Blink\Blink;
@@ -39,9 +39,9 @@ class DLRService extends Service
                 if (SmppConfig::$prmDlrResponsive && $blink != null) {
                     try {
                         if (!$blink->httpStatus()->isSuccess()) {
-                            Error::throw(
-                                HttpCode::FAILED_DEPENDENCY,
-                                "Dlr response error status code {$blink->status()}"
+                            ClientError::throw(
+                                "Dlr response error status code {$blink->status()}",
+                                HttpCode::FAILED_DEPENDENCY
                             );
                         }
                         $response = new ResponseDto(...$blink->responseAsJson());
