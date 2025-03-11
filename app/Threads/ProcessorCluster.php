@@ -52,24 +52,25 @@ class ProcessorCluster extends Cluster
 
     private function connectionStatus(): bool
     {
-        $socket = stream_socket_client("tcp://" . SmppConfig::$host . ":" . SmppConfig::$port, $errno, $errstr, 5);
-
-        if ($socket) {
-            $read = [$socket];
-            $write = $except = null;
-
-            if (stream_select($read, $write, $except, 0)) {
-                $status = true;
-            } else {
-                $status = false;
-            }
-            fclose($socket);
-            $this->logger->error("Socket connection error [" . SmppConfig::$host . ":" . SmppConfig::$port . "]");
-            return $status;
-        } else {
-            $this->logger->error("Socket connection error [" . SmppConfig::$host . ":" . SmppConfig::$port . "]: $errstr ($errno)");
-            return false;
-        }
+//        $socket = stream_socket_client("udp://" . SmppConfig::$host . ":" . SmppConfig::$port, $errno, $errstr, 5);
+//
+//        if ($socket) {
+//            $read = [$socket];
+//            $write = $except = null;
+//
+//            if (stream_select($read, $write, $except, 0)) {
+//                $status = true;
+//            } else {
+//                $status = false;
+//            }
+//            fclose($socket);
+//            $this->logger->error("Socket connection error [" . SmppConfig::$host . ":" . SmppConfig::$port . "]");
+//            return $status;
+//        } else {
+//            $this->logger->error("Socket connection error [" . SmppConfig::$host . ":" . SmppConfig::$port . "]: $errstr ($errno)");
+//            return false;
+//        }
+        return true;
     }
 
     protected function asInterrupt(): void
