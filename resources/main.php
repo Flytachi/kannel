@@ -72,7 +72,7 @@
                 result += '</div><div class="card-footer">';
                 if (response.condition === 'passive') {
                     result += '<button class="card-button" onclick="serviceStart()">Start</button>';
-                } else if (response.condition === 'active') {
+                } else if (response.condition !== 'passive') {
                     result += '<button class="card-button" onclick="serviceStop()">Stop</button>';
                 }
                 result += '<button class="card-button" onclick="selectService()">Reload</button>';
