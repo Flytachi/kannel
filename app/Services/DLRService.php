@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Entity\Dto\MsgDto;
+use App\Entity\Dto\UssdMsgDto;
 use App\Entity\Dto\ResponseDto;
 use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Http\HttpCode;
@@ -14,29 +14,29 @@ class DLRService extends Service
     public function sending(int $sourceAddress, string $message): void
     {
         try {
-            if (SmppConfig::$prmDlrOn
-                && SmppConfig::$prmDlrUrl != ''
-                && SmppConfig::$prmDlrMethod != ''
+            if (SmppConfig::$ussdPrmDlrOn
+                && SmppConfig::$ussdPrmDlrUrl != ''
+                && SmppConfig::$ussdPrmDlrMethod != ''
             ) {
-                $blink = match (SmppConfig::$prmDlrMethod) {
+                $blink = match (SmppConfig::$ussdPrmDlrMethod) {
                     'GET' => Blink::headers(Blink::ACCEPT_JSON)
-                        ->get(SmppConfig::$prmDlrUrl, [
+                        ->get(SmppConfig::$ussdPrmDlrUrl, [
                             'phoneNumber' => $sourceAddress,
                             'input' => $message,
-                            'meta-data' => SmppConfig::$prmDlrMetaData
+                            'meta-data' => SmppConfig::$ussdPrmDlrMetaData
                         ])->send(false),
                     'POST' => Blink::headers(Blink::ACCEPT_JSON, Blink::CONTENT_JSON)
-                        ->post(SmppConfig::$prmDlrUrl)
+                        ->post(SmppConfig::$ussdPrmDlrUrl)
                         ->body([
                             'phoneNumber' => $sourceAddress,
                             'input' => $message,
-                            'meta-data' => SmppConfig::$prmDlrMetaData
+                            'meta-data' => SmppConfig::$ussdPrmDlrMetaData
                         ])
                         ->send(false),
                     default => null
                 };
 
-                if (SmppConfig::$prmDlrResponsive && $blink != null) {
+                if (SmppConfig::$ussdPrmDlrResponsive && $blink != null) {
                     try {
                         if (!$blink->httpStatus()->isSuccess()) {
                             ClientError::throw(
@@ -49,10 +49,10 @@ class DLRService extends Service
                         $enableInput = $response->enableInput;
                     } catch (\Throwable $e) {
                         $this->logger->warning("response: " .  $e->getMessage());
-                        $msg = 'Unknown Error';
+                        $msg = 'Unknown error. Please try again later';
                         $enableInput = false;
                     } finally {
-                        $this->submitQue(new MsgDto(
+                        $this->submitQue(new UssdMsgDto(
                             $sourceAddress,
                             $msg,
                             $enableInput
@@ -65,10 +65,11 @@ class DLRService extends Service
         }
     }
 
-    public function submitQue(MsgDto $msg): void
+    public function submitQue(UssdMsgDto $msg): void
     {
         try {
-            Store::main()->rPush(SmppConfig::$prmSenderQln, json_encode($msg));
+            SmppConfig::init();
+            Store::main()->rPush(SmppConfig::$ussdPrmSenderQln, json_encode($msg));
         } catch (\Throwable $e) {
             $this->logger->warning("submit que: " .  $e->getMessage());
         }

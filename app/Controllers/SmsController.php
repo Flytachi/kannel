@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Entity\Dto\SmsMsgDto;
+use App\Entity\Request\SmsRequest;
+use App\Services\SmsService;
+use App\Threads\SmsSender;
+use Flytachi\Kernel\Src\Errors\ServerError;
+use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PostMapping;
+use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
+use Flytachi\Kernel\Src\Http\HttpCode;
+use Flytachi\Kernel\Src\Stereotype\Response;
+use Flytachi\Kernel\Src\Stereotype\RestController;
+
+
+#[RequestMapping('sms')]
+class SmsController extends RestController
+{
+    #[PostMapping]
+    public function submitGet(): void
+    {
+        $request = SmsRequest::params();
+        if (SmsSender::status() == null) {
+            ServerError::throw("Sms service is not working", HttpCode::SERVICE_UNAVAILABLE);
+        }
+        (new SmsService)->submitQue(new SmsMsgDto(
+            $request->phoneNumber,
+            $request->message
+        ));
+    }
+
+    #[PostMapping]
+    public function submitPost(): void
+    {
+        $request = SmsRequest::json();
+        if (SmsSender::status() == null) {
+            ServerError::throw("Sms service is not working", HttpCode::SERVICE_UNAVAILABLE);
+        }
+        (new SmsService)->submitQue(new SmsMsgDto(
+            $request->phoneNumber,
+            $request->message
+        ));
+    }
+}

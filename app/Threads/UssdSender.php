@@ -2,17 +2,19 @@
 
 namespace App\Threads;
 
-use App\Entity\Dto\MsgDto;
+use App\Entity\Dto\UssdMsgDto;
 use App\Services\SmppConfig;
 use App\Services\Store;
 use Flytachi\Kernel\Src\Stereotype\Cluster;
 use PhpSmpp\Client;
+use PhpSmpp\Helper;
+use PhpSmpp\Pdu\Part\Address;
 use PhpSmpp\Pdu\Part\Tag;
 use PhpSmpp\Service\Sender;
 use PhpSmpp\SMPP;
 use PhpSmpp\Transport\Exception\SocketTransportException;
 
-class SSender extends Cluster
+class UssdSender extends Cluster
 {
     public ?Sender $service = null;
 
@@ -20,7 +22,7 @@ class SSender extends Cluster
     {
         SmppConfig::init();
         $this->logger->info('LISTEN ' . SmppConfig::$host . ' ' . SmppConfig::$port);
-        $this->prepare(SmppConfig::$prmSenderBalancer);
+        $this->prepare(SmppConfig::$ussdPrmSenderBalancer);
 
         $this->service = new Sender(
             [SmppConfig::$host . ':' . SmppConfig::$port],
@@ -39,9 +41,9 @@ class SSender extends Cluster
             $this->service->enshureConnection();
             $this->logger->info("(enshure) connection success");
             $this->streaming(function () {
-                if ($taskData = Store::main()->lPop(SmppConfig::$prmSenderQln)) {
+                if ($taskData = Store::main()->lPop(SmppConfig::$ussdPrmSenderQln)) {
                     try {
-                        $msg = new MsgDto(...json_decode($taskData, true));
+                        $msg = new UssdMsgDto(...json_decode($taskData, true));
 
                         // tags
                         $tags = [];
@@ -53,15 +55,15 @@ class SSender extends Cluster
                         $tags[] = new Tag(Tag::ITS_REPLY_TYPE, 5, 1, 'c');
 
                         try {
-                            $smsId = $this->service->sendUSSD($msg->phoneNumber, $msg->message, SmppConfig::$prmSenderFrom, $tags);
+                            $smsId = $this->service->sendUSSD($msg->phoneNumber, $msg->message, SmppConfig::$ussdPrmSenderFrom, $tags);
                             $this->logger->info(
-                                '[FROM:' . SmppConfig::$prmSenderFrom . '] '
+                                '[FROM:' . SmppConfig::$ussdPrmSenderFrom . '] '
                                 . '[ADDR_SRC:' . $msg->phoneNumber . '] '
                                 . '[MSG_ID:' . $smsId .  '] MSG ' . $msg->message
                             );
                         } catch (\Throwable $e) {
                             $this->logger->info(
-                                '[FROM:' . SmppConfig::$prmSenderFrom . '] '
+                                '[FROM:' . SmppConfig::$ussdPrmSenderFrom . '] '
                                 . '[ADDR_SRC:' . $msg->phoneNumber . '] '
                                 . 'MSG ' . $msg->message . ' ('  . $e->getMessage() . ')'
                             );

@@ -10,14 +10,14 @@ use PhpSmpp\Client;
 use PhpSmpp\Service\Listener;
 use PhpSmpp\Transport\Exception\SocketTransportException;
 
-class SListener extends Cluster
+class UssdListener extends Cluster
 {
     private ?Listener $service = null;
     public function run(mixed $data = null): void
     {
         SmppConfig::init();
         $this->logger->info('LISTEN ' . SmppConfig::$host . ' ' . SmppConfig::$port);
-        $this->prepare(SmppConfig::$prmListenerBalancer);
+        $this->prepare(SmppConfig::$ussdPrmListenerBalancer);
 
         $this->service = new Listener(
             [SmppConfig::$host . ':' . SmppConfig::$port],

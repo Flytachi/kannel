@@ -26,6 +26,7 @@
         "flytachi/kernel": "5.2.7",
         "glushkovds/php-smpp": "0.7.0",
         "ext-posix": "*",
-        "ext-redis": "*"
+        "ext-redis": "*",
+        "ext-iconv": "*"
     }
 }

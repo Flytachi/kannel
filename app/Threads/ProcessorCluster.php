@@ -9,8 +9,9 @@ use Flytachi\Kernel\Src\Unit\TimeTool;
 
 class ProcessorCluster extends Cluster
 {
-    public ?int $listenerPid = null;
-    public ?int $senderPid = null;
+    public ?int $ussdListenerPid = null;
+    public ?int $ussdSenderPid = null;
+    public ?int $smsSenderPid = null;
 
     public function run(mixed $data = null): void
     {
@@ -22,22 +23,40 @@ class ProcessorCluster extends Cluster
         $this->connective();
         $this->setCondition("active");
 
-        $this->listenerPid = SListener::dispatch();
-        $this->senderPid = SSender::dispatch();
+        if (SmppConfig::$ussdOn) {
+            $this->ussdListenerPid = UssdListener::dispatch();
+            $this->ussdSenderPid = UssdSender::dispatch();
+        }
+        if (SmppConfig::$smsOn) {
+            $this->smsSenderPid = SmsSender::dispatch();
+        }
 
         $this->streaming(function () {
-            // Subprocess Listener
-            if ($this->listenerPid == null) $this->listenerPid = SListener::dispatch();
-            else {
-                $listenerPid = posix_getpgid($this->listenerPid);
-                if (!$listenerPid) $this->listenerPid = null;
+            // Subprocess Ussd
+            if (SmppConfig::$ussdOn) {
+                // Subprocess Listener (ussd)
+                if ($this->ussdListenerPid == null) $this->ussdListenerPid = UssdListener::dispatch();
+                else {
+                    $ussdListenerPid = posix_getpgid($this->ussdListenerPid);
+                    if (!$ussdListenerPid) $this->ussdListenerPid = null;
+                }
+
+                // Subprocess Sender (ussd)
+                if ($this->ussdSenderPid == null) $this->ussdSenderPid = UssdSender::dispatch();
+                else {
+                    $ussdSenderPid = posix_getpgid($this->ussdSenderPid);
+                    if (!$ussdSenderPid) $this->ussdSenderPid = null;
+                }
             }
 
-            // Subprocess Sender
-            if ($this->senderPid == null) $this->senderPid = SSender::dispatch();
-            else {
-                $senderPid = posix_getpgid($this->senderPid);
-                if (!$senderPid) $this->senderPid = null;
+            // Subprocess Sms
+            if (SmppConfig::$smsOn) {
+                // Subprocess Sender (sms)
+                if ($this->smsSenderPid == null) $this->smsSenderPid = SmsSender::dispatch();
+                else {
+                    $smsSenderPid = posix_getpgid($this->smsSenderPid);
+                    if (!$smsSenderPid) $this->smsSenderPid = null;
+                }
             }
         });
     }
@@ -75,19 +94,23 @@ class ProcessorCluster extends Cluster
 
     protected function asInterrupt(): void
     {
-        if ($this->listenerPid) Signal::interrupt($this->listenerPid);
-        if ($this->senderPid) Signal::interrupt($this->senderPid);
-        if ($this->listenerPid) $this->wait($this->listenerPid);
-        if ($this->senderPid) $this->wait($this->senderPid);
+        if ($this->ussdListenerPid) Signal::interrupt($this->ussdListenerPid);
+        if ($this->ussdSenderPid) Signal::interrupt($this->ussdSenderPid);
+        if ($this->smsSenderPid) Signal::interrupt($this->smsSenderPid);
+        if ($this->ussdListenerPid) $this->wait($this->ussdListenerPid);
+        if ($this->ussdSenderPid) $this->wait($this->ussdSenderPid);
+        if ($this->smsSenderPid) $this->wait($this->smsSenderPid);
         parent::asInterrupt();
     }
 
     protected function asTermination(): void
     {
-        if ($this->listenerPid) Signal::termination($this->listenerPid);
-        if ($this->senderPid) Signal::termination($this->senderPid);
-        if ($this->listenerPid) $this->wait($this->listenerPid);
-        if ($this->senderPid) $this->wait($this->senderPid);
+        if ($this->ussdListenerPid) Signal::termination($this->ussdListenerPid);
+        if ($this->ussdSenderPid) Signal::termination($this->ussdSenderPid);
+        if ($this->smsSenderPid) Signal::termination($this->smsSenderPid);
+        if ($this->ussdListenerPid) $this->wait($this->ussdListenerPid);
+        if ($this->ussdSenderPid) $this->wait($this->ussdSenderPid);
+        if ($this->smsSenderPid) $this->wait($this->smsSenderPid);
         parent::asTermination();
     }
 }
