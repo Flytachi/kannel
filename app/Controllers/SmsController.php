@@ -7,17 +7,17 @@ use App\Entity\Request\SmsRequest;
 use App\Services\SmsService;
 use App\Threads\SmsSender;
 use Flytachi\Kernel\Src\Errors\ServerError;
+use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PostMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
 use Flytachi\Kernel\Src\Http\HttpCode;
-use Flytachi\Kernel\Src\Stereotype\Response;
 use Flytachi\Kernel\Src\Stereotype\RestController;
 
 
 #[RequestMapping('sms')]
 class SmsController extends RestController
 {
-    #[PostMapping]
+    #[GetMapping]
     public function submitGet(): void
     {
         $request = SmsRequest::params();

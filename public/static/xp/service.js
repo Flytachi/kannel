@@ -207,6 +207,104 @@ class Service
         });
     }
 
+    static serviceSubsStatus(
+        notifyError = true,
+        callbackSuccess = (response) => {},
+        callbackError = (response) => {},
+    ) {
+        this.cXhrInit('service')
+
+        this.aXhr['service'] = $.ajax({
+            type: "GET",
+            url: "/api/service/subs",
+            contentType: "application/json",
+            dataType: "json",
+            headers: {
+                "Accept": "application/json"
+            },
+            success: function (response) {
+                callbackSuccess(response)
+            },
+            error: function (response) {
+                Service.isAuth(response);
+                if (notifyError) {
+                    showNotification(
+                        'Error',
+                        response.responseJSON.message ?? 'Unknown error',
+                        'error'
+                    );
+                }
+                callbackError(response)
+            }
+        });
+    }
+
+    static serviceSubsStart(
+        serviceName,
+        notifyError = true,
+        callbackSuccess = (response) => {},
+        callbackError = (response) => {},
+    ) {
+        this.cXhrInit('service')
+
+        this.aXhr['service'] = $.ajax({
+            type: "PUT",
+            url: "/api/service/subs/" + serviceName,
+            contentType: "application/json",
+            dataType: "json",
+            headers: {
+                "Accept": "application/json"
+            },
+            success: function (response) {
+                callbackSuccess(response)
+            },
+            error: function (response) {
+                Service.isAuth(response);
+                if (notifyError) {
+                    showNotification(
+                        'Error',
+                        response.responseJSON.message ?? 'Unknown error',
+                        'error'
+                    );
+                }
+                callbackError(response)
+            }
+        });
+    }
+
+    static serviceSubsStop(
+        serviceName,
+        notifyError = true,
+        callbackSuccess = (response) => {},
+        callbackError = (response) => {},
+    ) {
+        this.cXhrInit('service')
+
+        this.aXhr['service'] = $.ajax({
+            type: "DELETE",
+            url: "/api/service/subs/" + serviceName,
+            contentType: "application/json",
+            dataType: "json",
+            headers: {
+                "Accept": "application/json"
+            },
+            success: function (response) {
+                callbackSuccess(response)
+            },
+            error: function (response) {
+                Service.isAuth(response);
+                if (notifyError) {
+                    showNotification(
+                        'Error',
+                        response.responseJSON.message ?? 'Unknown error',
+                        'error'
+                    );
+                }
+                callbackError(response)
+            }
+        });
+    }
+
     static logFiles(
         notifyError = true,
         callbackSuccess = (response) => {},

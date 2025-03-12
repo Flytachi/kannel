@@ -13,7 +13,8 @@
             <div class="card-header">Sidebar</div>
             <div class="card-body">
                 <ul class="sidebar-menu">
-                    <li onclick="selectService(this)">Service</li>
+                    <li onclick="selectProcessor(this)">Processor</li>
+                    <li onclick="selectService(this)">Services</li>
                     <li onclick="selectConfig(this)">Environment</li>
                     <li onclick="selectLog(this)">Logs</li>
                 </ul>
@@ -49,13 +50,13 @@
 <script>
     let logTimerId;
 
-    function selectService(elem = null) {
+    function selectProcessor(elem = null) {
         if (elem == null || !elem.classList.contains("selected")) {
             display.innerHTML = '';
 
             Service.serviceStatus(true, (response) => {
                 let result = '<div class="card" style="width: auto">';
-                result += '<div class="card-header">Service</div>';
+                result += '<div class="card-header">Processor</div>';
                 result += '<div class="card-body">';
 
                 result += '<strong>Condition:</strong> <span class="badge">' + response.condition + '</span><br/>';
@@ -67,7 +68,7 @@
                 result += '<strong>StartedAt:</strong> ' + (response.startedAt == null
                         ? 'null'
                         : response.startedAt
-                )  + '<br/>';
+                );
 
                 result += '</div><div class="card-footer">';
                 if (response.condition === 'passive') {
@@ -75,6 +76,46 @@
                 } else if (response.condition !== 'passive') {
                     result += '<button class="card-button" onclick="serviceStop()">Stop</button>';
                 }
+                result += '<button class="card-button" onclick="selectProcessor()">Reload</button>';
+                result += '</div></div>';
+                display.innerHTML = result;
+                closeAction = function () {}
+            });
+        }
+    }
+
+    function selectService(elem = null) {
+        if (elem == null || !elem.classList.contains("selected")) {
+            display.innerHTML = '';
+
+            Service.serviceSubsStatus(true, (response) => {
+                let result = '<div class="card" style="width: auto">';
+                result += '<div class="card-header">Services</div>';
+                result += '<div class="card-body">';
+
+                Object.entries(response).forEach(([name, info]) => {
+                    console.log(`${name}: ${info}`);
+                    result += `<fieldset><legend>${name}</legend>`;
+                    result += '<strong>Condition:</strong> <span class="badge">' + info.condition + '</span><br/>';
+                    result += '<strong>ClassName:</strong> ' + info.className + '<br/>';
+                    result += '<strong>Pid:</strong> ' + (info.pid == null
+                            ? 'null'
+                            : '<span class="badge" style="background: #0800ff;">' + info.pid + '</span>'
+                    )  + '<br/>';
+                    result += '<strong>StartedAt:</strong> ' + (info.startedAt == null
+                            ? 'null'
+                            : info.startedAt
+                    );
+                    result += '</br><strong>Action:</strong> ';
+                    if (info.condition === 'passive') {
+                        result += `<button class="card-button" onclick="serviceSubsStart('${name}')">Start</button>`;
+                    } else if (info.condition !== 'passive') {
+                        result += `<button class="card-button" onclick="serviceSubsStop('${name}')">Stop</button>`;
+                    }
+                    result += '</fieldset>';
+                });
+
+                result += '</div><div class="card-footer">';
                 result += '<button class="card-button" onclick="selectService()">Reload</button>';
                 result += '</div></div>';
                 display.innerHTML = result;

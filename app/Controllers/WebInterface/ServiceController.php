@@ -3,10 +3,15 @@
 namespace App\Controllers\WebInterface;
 
 use App\Threads\ProcessorCluster;
+use App\Threads\SmsSender;
+use App\Threads\UssdListener;
+use App\Threads\UssdSender;
+use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\DeleteMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PutMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
+use Flytachi\Kernel\Src\Http\HttpCode;
 use Flytachi\Kernel\Src\Stereotype\Response;
 use Flytachi\Kernel\Src\Stereotype\RestController;
 
@@ -36,5 +41,73 @@ class ServiceController extends RestController
     public function stop(): void
     {
         ProcessorCluster::stop();
+    }
+
+    #[GetMapping('subs')]
+    public function statusSubs(): Response
+    {
+        $status = [];
+        //
+        $stUssdListener = UssdListener::status();
+        $status['UssdListener'] = [
+            'pid' => $stUssdListener['pid'] ?? null,
+            'className' => $stUssdListener['className'] ?? UssdListener::class,
+            'condition' => $stUssdListener['condition'] ?? 'passive',
+            'startedAt' => $stUssdListener['startedAt'] ?? null
+        ];
+
+        $stUssdSender = UssdSender::status();
+        $status['UssdSender'] = [
+            'pid' => $stUssdSender['pid'] ?? null,
+            'className' => $stUssdSender['className'] ?? UssdSender::class,
+            'condition' => $stUssdSender['condition'] ?? 'passive',
+            'startedAt' => $stUssdSender['startedAt'] ?? null
+        ];
+
+        $stSmsSender = SmsSender::status();
+        $status['SmsSender'] = [
+            'pid' => $stSmsSender['pid'] ?? null,
+            'className' => $stSmsSender['className'] ?? SmsSender::class,
+            'condition' => $stSmsSender['condition'] ?? 'passive',
+            'startedAt' => $stSmsSender['startedAt'] ?? null
+        ];
+
+        return new Response($status);
+    }
+
+    #[PutMapping('subs/{name}')]
+    public function startSubs(string $name): void
+    {
+        switch ($name) {
+            case 'UssdListener':
+                UssdListener::dispatch();
+                break;
+            case 'UssdSender':
+                UssdSender::dispatch();
+                break;
+            case 'SmsSender':
+                SmsSender::dispatch();
+                break;
+            default:
+                ClientError::throw("Service {$name} not found", HttpCode::NOT_FOUND);
+        }
+    }
+
+    #[DeleteMapping('subs/{name}')]
+    public function stopSubs(string $name): void
+    {
+        switch ($name) {
+            case 'UssdListener':
+                UssdListener::stop();
+                break;
+            case 'UssdSender':
+                UssdSender::stop();
+                break;
+            case 'SmsSender':
+                SmsSender::stop();
+                break;
+            default:
+                ClientError::throw("Service {$name} not found", HttpCode::NOT_FOUND);
+        }
     }
 }

@@ -54,7 +54,7 @@ function serviceStart() {
         showNotification("Start Service", "Service start command success");
         setTimeout(() => {
             unlockScreen();
-            selectService();
+            selectProcessor();
         }, 1000);
     }, (response) => {
         unlockScreen();
@@ -65,6 +65,32 @@ function serviceStop() {
     lockScreen();
     Service.serviceStop(true, (response) => {
         showNotification("Stop Service", "Service stop command success");
+        setTimeout(() => {
+            unlockScreen();
+            selectProcessor();
+        }, 1000);
+    }, (response) => {
+        unlockScreen();
+    })
+}
+
+function serviceSubsStart(serviceName) {
+    lockScreen();
+    Service.serviceSubsStart(serviceName, true, (response) => {
+        showNotification(`Start Service (${serviceName})`, `Service ${serviceName} start command success`);
+        setTimeout(() => {
+            unlockScreen();
+            selectService();
+        }, 1000);
+    }, (response) => {
+        unlockScreen();
+    })
+}
+
+function serviceSubsStop(serviceName) {
+    lockScreen();
+    Service.serviceSubsStop(serviceName, true, (response) => {
+        showNotification(`Stop Service (${serviceName})`, `Service ${serviceName} stop command success`);
         setTimeout(() => {
             unlockScreen();
             selectService();

@@ -58,8 +58,8 @@ final class SmppConfig
 
             // ----- (ussd)
             self::$ussdOn = (bool) env('SMPP_USSD_ON', false);
-            self::$ussdPrmListenerBalancer = (int) env('SMPP_USSD_PARAMS_LISTENER_RPS', 10);
-            self::$ussdPrmSenderBalancer = (int) env('SMPP_USSD_PARAMS_SENDER_RPS', 10);
+            self::$ussdPrmListenerBalancer = (int) env('SMPP_USSD_PARAMS_LISTENER_RPS', 100);
+            self::$ussdPrmSenderBalancer = (int) env('SMPP_USSD_PARAMS_SENDER_RPS', 100);
             self::$ussdPrmSenderQln = (string) env('SMPP_USSD_PARAMS_SENDER_QLN', 'smpp-kannel-ussd');
             if(trim(self::$ussdPrmSenderQln) == '') self::$ussdPrmSenderQln = 'smpp-kannel-ussd';
             self::$ussdPrmSenderFrom = (string) env('SMPP_USSD_PARAMS_SENDER_FROM', '');
@@ -72,7 +72,7 @@ final class SmppConfig
 
             // ---- (sms)
             self::$smsOn = (bool) env('SMPP_SMS_ON', false);
-            self::$smsPrmSenderBalancer = (int) env('SMPP_SMS_PARAMS_SENDER_RPS', 10);
+            self::$smsPrmSenderBalancer = (int) env('SMPP_SMS_PARAMS_SENDER_RPS', 100);
             self::$smsPrmSenderQln = (string) env('SMPP_SMS_PARAMS_SENDER_QLN', 'smpp-kannel-sms');
             if(trim(self::$smsPrmSenderQln) == '') self::$smsPrmSenderQln = 'smpp-kannel-sms';
             self::$smsPrmSenderFrom = (string) env('SMPP_SMS_PARAMS_SENDER_FROM', '');
