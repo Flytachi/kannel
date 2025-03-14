@@ -4,26 +4,25 @@ namespace App\Threads;
 
 use App\Services\DLRService;
 use App\Services\SmppConfig;
-use Flytachi\Kernel\Src\Errors\ServerError;
 use Flytachi\Kernel\Src\Stereotype\Cluster;
 use PhpSmpp\Client;
 use PhpSmpp\Service\Listener;
 use PhpSmpp\Transport\Exception\SocketTransportException;
 
-class UssdListener extends Cluster
+class SubReceiver extends Cluster
 {
     private ?Listener $service = null;
     public function run(mixed $data = null): void
     {
         SmppConfig::init();
         $this->logger->info('LISTEN ' . SmppConfig::$host . ' ' . SmppConfig::$port);
-        $this->prepare(SmppConfig::$ussdPrmListenerBalancer);
+        $this->prepare(SmppConfig::$balancerReceiver);
 
         $this->service = new Listener(
             [SmppConfig::$host . ':' . SmppConfig::$port],
             SmppConfig::$username,
             SmppConfig::$password,
-            Client::BIND_MODE_TRANSCEIVER
+            Client::BIND_MODE_RECEIVER
         );
         $dlrService = new DLRService;
 

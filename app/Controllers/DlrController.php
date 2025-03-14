@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Entity\Dto\UssdMsgDto;
 use App\Entity\Request\SubmitRequest;
 use App\Services\DLRService;
-use App\Threads\UssdSender;
+use App\Threads\SubTransmitter;
 use Flytachi\Kernel\Src\Errors\ServerError;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PostMapping;
@@ -20,7 +20,7 @@ class DlrController extends RestController
     public function submitGet(): void
     {
         $request = SubmitRequest::params();
-        if (UssdSender::status() == null) {
+        if (SubTransmitter::status() == null) {
             ServerError::throw("Ussd (sender) service is not working", HttpCode::SERVICE_UNAVAILABLE);
         }
         (new DLRService)->submitQue(new UssdMsgDto(
@@ -34,7 +34,7 @@ class DlrController extends RestController
     public function submitPost(): void
     {
         $request = SubmitRequest::json();
-        if (UssdSender::status() == null) {
+        if (SubTransmitter::status() == null) {
             ServerError::throw("Ussd (sender) service is not working", HttpCode::SERVICE_UNAVAILABLE);
         }
         (new DLRService)->submitQue(new UssdMsgDto(

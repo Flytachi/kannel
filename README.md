@@ -89,10 +89,11 @@ SMPP_PORT=<your_smpp_port>
 SMPP_LOGIN=<your_smpp_login>
 SMPP_PASS=<your_smpp_password>
 
+SMPP_RPS_RECEIVER=100                                       # read qty per/seccond for receiver
+SMPP_RPS_TRANSMITTER=100                                    # read qty per/seccond for transmitter
+
 # Params Ussd
 SMPP_USSD_ON=<true/false>                                   # on/off for ussd
-SMPP_USSD_PARAMS_LISTENER_RPS=100                           # read qty per/seccond for listener
-SMPP_USSD_PARAMS_SENDER_RPS=100                             # read qty per/seccond for sender
 SMPP_USSD_PARAMS_SENDER_QLN=<your_redis_listname>           # set '' default value -> 'smpp-kannel-ussd'
 SMPP_USSD_PARAMS_SENDER_FROM=<your_ussd_from_address>       # example '*100#'
 
@@ -104,7 +105,6 @@ SMPP_USSD_PARAMS_DLR_RESPONSIVE=<true/false>                # receive wait for a
 
 # Params Sms
 SMPP_SMS_ON=<true/false>                                    # on/off for sms
-SMPP_SMS_PARAMS_SENDER_RPS=100                              # read qty per/seccond for sender
 SMPP_SMS_PARAMS_SENDER_QLN=<your_redis_listname>            # set '' default value -> 'smpp-kannel-sms'
 SMPP_SMS_PARAMS_SENDER_FROM=<your_sms_from_address>         # example '111'
 

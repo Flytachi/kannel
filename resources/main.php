@@ -15,6 +15,7 @@
                 <ul class="sidebar-menu">
                     <li onclick="selectProcessor(this)">Processor</li>
                     <li onclick="selectService(this)">Services</li>
+                    <li onclick="selectSmsCenter(this)">Sms Center</li>
                     <li onclick="selectConfig(this)">Environment</li>
                     <li onclick="selectLog(this)">Logs</li>
                 </ul>
@@ -94,7 +95,6 @@
                 result += '<div class="card-body">';
 
                 Object.entries(response).forEach(([name, info]) => {
-                    console.log(`${name}: ${info}`);
                     result += `<fieldset><legend>${name}</legend>`;
                     result += '<strong>Condition:</strong> <span class="badge">' + info.condition + '</span><br/>';
                     result += '<strong>ClassName:</strong> ' + info.className + '<br/>';
@@ -123,6 +123,64 @@
             });
         }
     }
+
+    function selectSmsCenter(elem = null) {
+        if (elem == null || !elem.classList.contains("selected")) {
+            display.innerHTML = '';
+
+            Service.serviceSubsStatus(true, (response) => {
+                let result = '<div class="card" style="width: auto">';
+                result += '<div class="card-header">Sms Center</div>';
+                result += '<div class="card-body">';
+
+                result += '<fieldset><legend>Send Message</legend>'
+                result += '<div class="form-control" style="margin-bottom: 5px">';
+                if (response.SubTransmitter.condition !== 'passive') {
+                    result += '<label for="sms_msisdn" style="margin-left: 10px;margin-right: 5px">MSISDN:</label>';
+                    result += '<input type="text" id="sms_msisdn" style="width: 200px" class="input" placeholder="Enter MSISDN">';
+                    result += '<label for="sms_message" style="margin-left: 10px;margin-right: 5px">Message:</label>';
+                    result += '<input type="text" id="sms_message" style="width: 500px" class="input" placeholder="Enter Message">';
+                    result += `<button class="card-button" onclick="smsCenterSend()">Send</button>`;
+                } else {
+                    result += '<span>SubTransmitter is deactivated or the <code>smsOn</code> parameter is disabled!</span>'
+                }
+                result += '</div></fieldset>';
+
+
+                // let result = '<div class="card" style="width: auto">';
+                // result += '<div class="card-header">Services</div>';
+                // result += '<div class="card-body">';
+                //
+                // Object.entries(response).forEach(([name, info]) => {
+                //     result += `<fieldset><legend>${name}</legend>`;
+                //     result += '<strong>Condition:</strong> <span class="badge">' + info.condition + '</span><br/>';
+                //     result += '<strong>ClassName:</strong> ' + info.className + '<br/>';
+                //     result += '<strong>Pid:</strong> ' + (info.pid == null
+                //             ? 'null'
+                //             : '<span class="badge" style="background: #0800ff;">' + info.pid + '</span>'
+                //     )  + '<br/>';
+                //     result += '<strong>StartedAt:</strong> ' + (info.startedAt == null
+                //             ? 'null'
+                //             : info.startedAt
+                //     );
+                //     result += '</br><strong>Action:</strong> ';
+                //     if (info.condition === 'passive') {
+                //         result += `<button class="card-button" onclick="serviceSubsStart('${name}')">Start</button>`;
+                //     } else if (info.condition !== 'passive') {
+                //         result += `<button class="card-button" onclick="serviceSubsStop('${name}')">Stop</button>`;
+                //     }
+                //     result += '</fieldset>';
+                // });
+
+                result += '</div><div class="card-footer">';
+                result += '<button class="card-button" onclick="selectSmsCenter()">Reload</button>';
+                result += '</div></div>';
+                display.innerHTML = result;
+                closeAction = function () {}
+            });
+        }
+    }
+
 
     function selectConfig(elem = null) {
         if (elem == null || !elem.classList.contains("selected")) {
@@ -199,6 +257,34 @@
         }
     }
 
+    function smsCenterSend() {
+        let msisdn = document.querySelector("#sms_msisdn");
+        let message = document.querySelector("#sms_message");
+        if (msisdn && message) {
+            if (msisdn.value.trim() === "") {
+                showNotification(
+                    'Warning', 'MSISDN value is empty', 'warning'
+                );
+                return
+            }
+            if (message.value.trim() === "") {
+                showNotification(
+                    'Warning', 'Message value is empty', 'warning'
+                );
+                return
+            }
+            Service.sendMessage(msisdn.value, message.value, true,
+                () => {
+                    showNotification(
+                        'Send Message Success',
+                        `${msisdn.value} -> ${message.value}`,
+                    );
+                    msisdn.value = '';
+                    message.value = '';
+                }
+            );
+        }
+    }
 
     function setTimer() {
         let limit = Number.parseInt(document.querySelector("#logParamTimeout").value) * 1000;

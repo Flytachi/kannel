@@ -3,9 +3,8 @@
 namespace App\Controllers\WebInterface;
 
 use App\Threads\ProcessorCluster;
-use App\Threads\SmsSender;
-use App\Threads\UssdListener;
-use App\Threads\UssdSender;
+use App\Threads\SubReceiver;
+use App\Threads\SubTransmitter;
 use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\DeleteMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
@@ -48,28 +47,20 @@ class ServiceController extends RestController
     {
         $status = [];
         //
-        $stUssdListener = UssdListener::status();
-        $status['UssdListener'] = [
+        $stUssdListener = SubReceiver::status();
+        $status['SubReceiver'] = [
             'pid' => $stUssdListener['pid'] ?? null,
-            'className' => $stUssdListener['className'] ?? UssdListener::class,
+            'className' => $stUssdListener['className'] ?? SubReceiver::class,
             'condition' => $stUssdListener['condition'] ?? 'passive',
             'startedAt' => $stUssdListener['startedAt'] ?? null
         ];
 
-        $stUssdSender = UssdSender::status();
-        $status['UssdSender'] = [
+        $stUssdSender = SubTransmitter::status();
+        $status['SubTransmitter'] = [
             'pid' => $stUssdSender['pid'] ?? null,
-            'className' => $stUssdSender['className'] ?? UssdSender::class,
+            'className' => $stUssdSender['className'] ?? SubTransmitter::class,
             'condition' => $stUssdSender['condition'] ?? 'passive',
             'startedAt' => $stUssdSender['startedAt'] ?? null
-        ];
-
-        $stSmsSender = SmsSender::status();
-        $status['SmsSender'] = [
-            'pid' => $stSmsSender['pid'] ?? null,
-            'className' => $stSmsSender['className'] ?? SmsSender::class,
-            'condition' => $stSmsSender['condition'] ?? 'passive',
-            'startedAt' => $stSmsSender['startedAt'] ?? null
         ];
 
         return new Response($status);
@@ -79,14 +70,11 @@ class ServiceController extends RestController
     public function startSubs(string $name): void
     {
         switch ($name) {
-            case 'UssdListener':
-                UssdListener::dispatch();
+            case 'SubReceiver':
+                SubReceiver::dispatch();
                 break;
-            case 'UssdSender':
-                UssdSender::dispatch();
-                break;
-            case 'SmsSender':
-                SmsSender::dispatch();
+            case 'SubTransmitter':
+                SubTransmitter::dispatch();
                 break;
             default:
                 ClientError::throw("Service {$name} not found", HttpCode::NOT_FOUND);
@@ -97,14 +85,11 @@ class ServiceController extends RestController
     public function stopSubs(string $name): void
     {
         switch ($name) {
-            case 'UssdListener':
-                UssdListener::stop();
+            case 'SubReceiver':
+                SubReceiver::stop();
                 break;
-            case 'UssdSender':
-                UssdSender::stop();
-                break;
-            case 'SmsSender':
-                SmsSender::stop();
+            case 'SubTransmitter':
+                SubTransmitter::stop();
                 break;
             default:
                 ClientError::throw("Service {$name} not found", HttpCode::NOT_FOUND);

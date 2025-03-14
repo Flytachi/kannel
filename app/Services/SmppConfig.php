@@ -13,9 +13,10 @@ final class SmppConfig
     public static string $username;
     public static string $password;
 
+    public static int $balancerReceiver;
+    public static int $balancerTransmitter;
+
     public static bool $ussdOn;
-    public static int $ussdPrmListenerBalancer;
-    public static int $ussdPrmSenderBalancer;
     public static string $ussdPrmSenderQln;
     public static string $ussdPrmSenderFrom;
     public static bool $ussdPrmDlrOn;
@@ -25,7 +26,6 @@ final class SmppConfig
     public static string $ussdPrmDlrResponsive;
 
     public static bool $smsOn;
-    public static int $smsPrmSenderBalancer;
     public static string $smsPrmSenderQln;
     public static string $smsPrmSenderFrom;
 
@@ -56,10 +56,11 @@ final class SmppConfig
                 HttpCode::FAILED_DEPENDENCY
             );
 
+            self::$balancerReceiver = (int) env('SMPP_RPS_RECEIVER', 100);
+            self::$balancerTransmitter = (int) env('SMPP_RPS_TRANSMITTER', 100);
+
             // ----- (ussd)
             self::$ussdOn = (bool) env('SMPP_USSD_ON', false);
-            self::$ussdPrmListenerBalancer = (int) env('SMPP_USSD_PARAMS_LISTENER_RPS', 100);
-            self::$ussdPrmSenderBalancer = (int) env('SMPP_USSD_PARAMS_SENDER_RPS', 100);
             self::$ussdPrmSenderQln = (string) env('SMPP_USSD_PARAMS_SENDER_QLN', 'smpp-kannel-ussd');
             if(trim(self::$ussdPrmSenderQln) == '') self::$ussdPrmSenderQln = 'smpp-kannel-ussd';
             self::$ussdPrmSenderFrom = (string) env('SMPP_USSD_PARAMS_SENDER_FROM', '');
@@ -69,10 +70,8 @@ final class SmppConfig
             self::$ussdPrmDlrMetaData = (string) env('SMPP_USSD_PARAMS_DLR_META', '');
             self::$ussdPrmDlrResponsive = (bool) env('SMPP_USSD_PARAMS_DLR_RESPONSIVE', false);
 
-
             // ---- (sms)
             self::$smsOn = (bool) env('SMPP_SMS_ON', false);
-            self::$smsPrmSenderBalancer = (int) env('SMPP_SMS_PARAMS_SENDER_RPS', 100);
             self::$smsPrmSenderQln = (string) env('SMPP_SMS_PARAMS_SENDER_QLN', 'smpp-kannel-sms');
             if(trim(self::$smsPrmSenderQln) == '') self::$smsPrmSenderQln = 'smpp-kannel-sms';
             self::$smsPrmSenderFrom = (string) env('SMPP_SMS_PARAMS_SENDER_FROM', '');

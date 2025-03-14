@@ -305,6 +305,44 @@ class Service
         });
     }
 
+    static sendMessage(
+        phoneNumber,
+        message,
+        notifyError = true,
+        callbackSuccess = (response) => {},
+        callbackError = (response) => {},
+    ) {
+        this.cXhrInit('serviceSms')
+
+        this.aXhr['serviceSms'] = $.ajax({
+            type: "POST",
+            url: "/sms",
+            contentType: "application/json",
+            dataType: "json",
+            headers: {
+                "Accept": "application/json"
+            },
+            data: JSON.stringify({
+                phoneNumber: Number(phoneNumber),
+                message
+            }),
+            success: function (response) {
+                callbackSuccess(response)
+            },
+            error: function (response) {
+                Service.isAuth(response);
+                if (notifyError) {
+                    showNotification(
+                        'Error',
+                        response.responseJSON.message ?? 'Unknown error',
+                        'error'
+                    );
+                }
+                callbackError(response)
+            }
+        });
+    }
+
     static logFiles(
         notifyError = true,
         callbackSuccess = (response) => {},
