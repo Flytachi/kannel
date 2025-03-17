@@ -33,9 +33,10 @@ class EnvironmentController extends RestController
             [ 'key' => 'SMPP_LOGIN', 'value' => env('SMPP_LOGIN', '') ],
             [ 'key' => 'SMPP_PASS', 'value' => env('SMPP_PASS', '') ],
 
+            [ 'key' => 'SMPP_RPS_RECEIVER', 'value' => env('SMPP_RPS_RECEIVER', 100) ],
+            [ 'key' => 'SMPP_RPS_TRANSMITTER', 'value' => env('SMPP_RPS_TRANSMITTER', 100) ],
+
             [ 'key' => 'SMPP_USSD_ON', 'value' => env('SMPP_USSD_ON', false) ],
-            [ 'key' => 'SMPP_USSD_PARAMS_LISTENER_RPS', 'value' => env('SMPP_USSD_PARAMS_LISTENER_RPS', 100) ],
-            [ 'key' => 'SMPP_USSD_PARAMS_SENDER_RPS', 'value' => env('SMPP_USSD_PARAMS_SENDER_RPS', 100) ],
             [ 'key' => 'SMPP_USSD_PARAMS_SENDER_QLN', 'value' => env('SMPP_USSD_PARAMS_SENDER_QLN', 'smpp-kannel-ussd') ],
             [ 'key' => 'SMPP_USSD_PARAMS_SENDER_FROM', 'value' => env('SMPP_USSD_PARAMS_SENDER_FROM', '') ],
             [ 'key' => 'SMPP_USSD_PARAMS_DLR_ON', 'value' => env('SMPP_USSD_PARAMS_DLR_ON', false) ],
@@ -45,7 +46,6 @@ class EnvironmentController extends RestController
             [ 'key' => 'SMPP_USSD_PARAMS_DLR_RESPONSIVE', 'value' => env('SMPP_USSD_PARAMS_DLR_RESPONSIVE', false) ],
 
             [ 'key' => 'SMPP_SMS_ON', 'value' => env('SMPP_SMS_ON', false) ],
-            [ 'key' => 'SMPP_SMS_PARAMS_SENDER_RPS', 'value' => env('SMPP_SMS_PARAMS_SENDER_RPS', 100) ],
             [ 'key' => 'SMPP_SMS_PARAMS_SENDER_QLN', 'value' => env('SMPP_SMS_PARAMS_SENDER_QLN', 'smpp-kannel-sms') ],
             [ 'key' => 'SMPP_SMS_PARAMS_SENDER_FROM', 'value' => env('SMPP_SMS_PARAMS_SENDER_FROM', '') ],
 

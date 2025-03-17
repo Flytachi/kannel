@@ -97,6 +97,7 @@ SMPP_USSD_ON=<true/false>                                   # on/off for ussd
 SMPP_USSD_PARAMS_SENDER_QLN=<your_redis_listname>           # set '' default value -> 'smpp-kannel-ussd'
 SMPP_USSD_PARAMS_SENDER_FROM=<your_ussd_from_address>       # example '*100#'
 
+# Params Ussd dlr
 SMPP_USSD_PARAMS_DLR_ON=<true/false>                        # params switch -> receive request on url
 SMPP_USSD_PARAMS_DLR_URL=<your_receive_url>                 # receive url
 SMPP_USSD_PARAMS_DLR_METHOD=<your_receive_method>           # receive method (GET, POST)
