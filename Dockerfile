@@ -8,7 +8,7 @@ RUN apk update && apk upgrade && apk add --no-cache php83 \
     php83-pgsql php83-mysqli php83-mysqlnd \
     php83-pdo php83-pdo_pgsql php83-pdo_mysql \
     php83-fpm php83-curl php83-redis \
-    php83-openssl php83-sockets \
+    php83-openssl php83-sockets php83-iconv \
     curl nginx runit
 
 # Создание необходимых файлов и директорий

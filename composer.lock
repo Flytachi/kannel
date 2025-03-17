@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4572ab4a09507ea99afb2317b3e0a111",
+    "content-hash": "f3480a78451e66f643acff3f02b00770",
     "packages": [
         {
             "name": "flytachi/kernel",
@@ -739,7 +739,8 @@
     "prefer-lowest": false,
     "platform": {
         "ext-posix": "*",
-        "ext-redis": "*"
+        "ext-redis": "*",
+        "ext-iconv": "*"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"
