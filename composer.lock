@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3480a78451e66f643acff3f02b00770",
+    "content-hash": "3e5cc8ec485a3da50dc60a554fc4b9af",
     "packages": [
         {
             "name": "flytachi/kernel",
-            "version": "5.2.7",
+            "version": "5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Flytachi/kernel.git",
-                "reference": "4e363a00f118216d33ae08fb8fda6bc2fcc53880"
+                "reference": "e6192539918489385789a89bb7a6f476f675707c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Flytachi/kernel/zipball/4e363a00f118216d33ae08fb8fda6bc2fcc53880",
-                "reference": "4e363a00f118216d33ae08fb8fda6bc2fcc53880",
+                "url": "https://api.github.com/repos/Flytachi/kernel/zipball/e6192539918489385789a89bb7a6f476f675707c",
+                "reference": "e6192539918489385789a89bb7a6f476f675707c",
                 "shasum": ""
             },
             "require": {
@@ -62,9 +62,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Flytachi/kernel/issues",
-                "source": "https://github.com/Flytachi/kernel/tree/v5.2.7"
+                "source": "https://github.com/Flytachi/kernel/tree/v5.2.8"
             },
-            "time": "2025-03-11T08:02:40+00:00"
+            "time": "2025-03-13T08:11:14+00:00"
         },
         {
             "name": "glushkovds/php-smpp",
