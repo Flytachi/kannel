@@ -27,7 +27,7 @@ class DLRService extends Service
                         ])->send(false),
                     'POST' => Blink::headers(Blink::ACCEPT_JSON, Blink::CONTENT_JSON)
                         ->post(SmppConfig::$ussdPrmDlrUrl)
-                        ->body([
+                        ->bodyJson([
                             'phoneNumber' => $sourceAddress,
                             'input' => $message,
                             'meta-data' => SmppConfig::$ussdPrmDlrMetaData
