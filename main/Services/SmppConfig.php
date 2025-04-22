@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Main\Services;
 
 use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Http\HttpCode;

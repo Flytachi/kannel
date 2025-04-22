@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\WebInterface;
+namespace Main\Controllers\WebInterface;
 
 use Flytachi\Kernel\Src\Errors\ClientError;
-use Flytachi\Kernel\Src\Factory\Entity\RequestDefault;
+use Flytachi\Kernel\Src\Factory\Entity\Request;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\DeleteMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PostMapping;
@@ -34,7 +34,7 @@ class AuthController extends RestController
         }
         $haveUser = env('WEB_ADMIN_USER', '');
         $havePass = env('WEB_ADMIN_PASS', '');
-        $request = RequestDefault::json();
+        $request = Request::json();
 
         if (
             $haveUser == '' || $havePass == ''

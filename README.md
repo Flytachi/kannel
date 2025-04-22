@@ -6,9 +6,9 @@
 
 ### 📌 Description
 
-This project is designed to work with the SMPP protocol and serves as a bridge 
-for integrating USSD responses and SMS messaging. It processes incoming 
-and outgoing messages, enabling seamless interaction 
+This project is designed to work with the SMPP protocol and serves as a bridge
+for integrating USSD responses and SMS messaging. It processes incoming
+and outgoing messages, enabling seamless interaction
 with mobile operators and other SMPP services.
 
 🔧 Features:<br>
@@ -19,7 +19,7 @@ with mobile operators and other SMPP services.
 ✅ Web interface for optimal monitoring and management.<br>
 ✅ Console interface for command-line operations and automation.<br>
 
-This project simplifies USSD and SMS service integration with external APIs 
+This project simplifies USSD and SMS service integration with external APIs
 and enhances communication between users and services. 🚀
 
 ## Installation
@@ -64,8 +64,8 @@ docker compose up -d
 <hr>
 
 ## Environment
-The environment must contain a list of values. 
-In an environment variable or in a `.env` file (example `app/.env`)
+The environment must contain a list of values.
+In an environment variable or in a `.env` file (example `root/.env`)
 ```.env
 # Main settings
 TIME_ZONE=Asia/Tashkent
@@ -120,17 +120,17 @@ Commands for service management! The shell must be responsive (php >= 8.3),<br>
 otherwise the commands will not work
 ### Start service:
 ```sh
-php extra run script app.service start 
+php extra run script main.service start 
 ```
 
 ### Stop service:
 ```sh 
-php extra run script app.service stop 
+php extra run script main.service stop 
 ```
 
 ### Service status:
 ```sh 
-php extra run script app.service status 
+php extra run script main.service status 
 ```
 <hr>
 

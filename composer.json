@@ -1,19 +1,21 @@
 {
-    "name": "flytachi/kannel",
-    "description": "Extra Framework Kannel(Smpp protocol)",
+    "name": "flytachi/extra",
+    "description": "Extra Framework",
     "type": "project",
     "license": "MIT",
-    "version": "1.0.0",
-    "keywords": ["Extra","extra","kannel","smpp"],
+    "version": "1.2.3",
+    "keywords": ["Extra","extra","framework"],
     "scripts": {
         "post-create-project-cmd": [
             "chmod -R 777 storage",
             "@php extra cfg env -i"
-        ]
+        ],
+        "dev-server": "@php -S 0.0.0.0:30999 -t ./public",
+        "test": "phpunit tests"
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "Main\\": "main/"
         }
     },
     "authors": [
@@ -23,10 +25,12 @@
         }
     ],
     "require": {
-        "flytachi/kernel": "5.2.8",
+        "flytachi/kernel": "~5.4.0",
         "glushkovds/php-smpp": "0.7.0",
         "ext-posix": "*",
-        "ext-redis": "*",
-        "ext-iconv": "*"
+        "ext-redis": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
     }
 }

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Controllers;
+namespace Main\Controllers;
 
-use App\Entity\Dto\UssdMsgDto;
-use App\Entity\Request\SubmitRequest;
-use App\Services\DLRService;
-use App\Threads\SubTransmitter;
 use Flytachi\Kernel\Src\Errors\ServerError;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PostMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
 use Flytachi\Kernel\Src\Http\HttpCode;
 use Flytachi\Kernel\Src\Stereotype\RestController;
+use Main\Entity\Dto\UssdMsgDto;
+use Main\Entity\Request\SubmitRequest;
+use Main\Services\DLRService;
+use Main\Threads\SubTransmitter;
 
 #[RequestMapping('dlr')]
 class DlrController extends RestController

@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace Main;
 
-use App\Services\SmppConfig;
-use App\Threads\ProcessorCluster;
 use Flytachi\Kernel\Console\Inc\CmdCustom;
 use Flytachi\Kernel\Src\Thread\Signal;
+use Main\Services\SmppConfig;
+use Main\Threads\ProcessorCluster;
 
 class ServiceCmd extends CmdCustom
 {

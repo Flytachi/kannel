@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Threads;
+namespace Main\Threads;
 
-use App\Entity\Dto\SmsMsgDto;
-use App\Entity\Dto\UssdMsgDto;
-use App\Services\SmppConfig;
-use App\Services\Store;
 use Flytachi\Kernel\Src\Stereotype\Cluster;
+use Main\Entity\Dto\SmsMsgDto;
+use Main\Entity\Dto\UssdMsgDto;
+use Main\Services\SmppConfig;
+use Main\Services\Store;
 use PhpSmpp\Client;
 use PhpSmpp\Helper;
 use PhpSmpp\Pdu\Part\Address;

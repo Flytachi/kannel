@@ -1,10 +1,7 @@
 <?php
 
-namespace App\Controllers\WebInterface;
+namespace Main\Controllers\WebInterface;
 
-use App\Threads\ProcessorCluster;
-use App\Threads\SubReceiver;
-use App\Threads\SubTransmitter;
 use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\DeleteMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
@@ -13,6 +10,9 @@ use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
 use Flytachi\Kernel\Src\Http\HttpCode;
 use Flytachi\Kernel\Src\Stereotype\Response;
 use Flytachi\Kernel\Src\Stereotype\RestController;
+use Main\Threads\ProcessorCluster;
+use Main\Threads\SubReceiver;
+use Main\Threads\SubTransmitter;
 
 #[RequestMapping('api/service')]
 #[SessionMiddleware]

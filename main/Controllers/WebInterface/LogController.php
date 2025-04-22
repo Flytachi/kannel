@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers\WebInterface;
+namespace Main\Controllers\WebInterface;
 
 use Flytachi\Kernel\Extra;
 use Flytachi\Kernel\Src\Errors\ClientError;
-use Flytachi\Kernel\Src\Factory\Entity\RequestDefault;
+use Flytachi\Kernel\Src\Factory\Entity\Request;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
 use Flytachi\Kernel\Src\Http\HttpCode;
@@ -29,7 +29,7 @@ class LogController extends RestController
     #[GetMapping]
     public function list(): Response
     {
-        $request = RequestDefault::params(false);
+        $request = Request::params(false);
         $limit = $request->limit ?? 1000;
         if (!is_numeric($limit)) {
             ClientError::throw('limit must be numeric', HttpCode::BAD_REQUEST);

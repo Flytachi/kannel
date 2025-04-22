@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Threads;
+namespace Main\Threads;
 
-use App\Services\SmppConfig;
 use Flytachi\Kernel\Src\Stereotype\Cluster;
 use Flytachi\Kernel\Src\Thread\Signal;
 use Flytachi\Kernel\Src\Unit\TimeTool;
+use Main\Services\SmppConfig;
 
 class ProcessorCluster extends Cluster
 {

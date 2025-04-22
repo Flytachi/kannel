@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Dto;
+namespace Main\Entity\Dto;
 
 class ResponseDto
 {

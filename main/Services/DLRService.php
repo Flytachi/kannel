@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace Main\Services;
 
-use App\Entity\Dto\UssdMsgDto;
-use App\Entity\Dto\ResponseDto;
 use Flytachi\Kernel\Src\Errors\ClientError;
 use Flytachi\Kernel\Src\Http\HttpCode;
 use Flytachi\Kernel\Src\Stereotype\Service;
 use Flytachi\Kernel\Src\Unit\Blink\Blink;
+use Main\Entity\Dto\ResponseDto;
+use Main\Entity\Dto\UssdMsgDto;
 
 class DLRService extends Service
 {

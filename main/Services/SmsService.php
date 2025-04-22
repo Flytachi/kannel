@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace Main\Services;
 
-use App\Entity\Dto\SmsMsgDto;
 use Flytachi\Kernel\Src\Stereotype\Service;
+use Main\Entity\Dto\SmsMsgDto;
 
 class SmsService extends Service
 {

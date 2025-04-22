@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\WebInterface;
+namespace Main\Controllers\WebInterface;
 
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Stereotype\Controller;

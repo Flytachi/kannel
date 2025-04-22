@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Controllers;
+namespace Main\Controllers;
 
-use App\Entity\Dto\SmsMsgDto;
-use App\Entity\Request\SmsRequest;
-use App\Services\SmsService;
-use App\Threads\SubTransmitter;
 use Flytachi\Kernel\Src\Errors\ServerError;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\GetMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\PostMapping;
 use Flytachi\Kernel\Src\Factory\Mapping\Annotation\RequestMapping;
 use Flytachi\Kernel\Src\Http\HttpCode;
 use Flytachi\Kernel\Src\Stereotype\RestController;
-
+use Main\Entity\Dto\SmsMsgDto;
+use Main\Entity\Request\SmsRequest;
+use Main\Services\SmsService;
+use Main\Threads\SubTransmitter;
 
 #[RequestMapping('sms')]
 class SmsController extends RestController

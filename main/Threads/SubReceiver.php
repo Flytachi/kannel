@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Threads;
+namespace Main\Threads;
 
-use App\Services\DLRService;
-use App\Services\SmppConfig;
 use Flytachi\Kernel\Src\Stereotype\Cluster;
+use Main\Services\DLRService;
+use Main\Services\SmppConfig;
 use PhpSmpp\Client;
 use PhpSmpp\Service\Listener;
 use PhpSmpp\Transport\Exception\SocketTransportException;
